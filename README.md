@@ -1,4 +1,5 @@
 # ADBSetting
+- 안드로이드 시스템 환경을 설정하는 어플리케이션
 
 1. 앱 실행
 ```
@@ -34,5 +35,7 @@ adb shell input keyevent KEY_CODE
 
 
 999. 기타
+```
 - monkeyrunner는 명령어처리가 adb에 비하여 느리다
 - 자동화 스크립트를 작성하는 경우에, input 사이에 간격을 주어야 제대로 입력이 된다
+```
