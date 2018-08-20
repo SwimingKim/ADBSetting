@@ -3,7 +3,9 @@ package skim.dev.kr.settingapplication;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,9 +56,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mapSettings.put("언어 설정", Settings.ACTION_LOCALE_SETTINGS);
         mapSettings.put("화면 해상도", Settings.ACTION_DISPLAY_SETTINGS);
         mapSettings.put("Swife 해제", "android.app.action.SET_NEW_PASSWORD");
-//        ComponentName cn = new ComponentName("com.samsung.android.app.cocktailbarservice","com.samsung.android.app.cocktailbarservice.settings.EdgePanels");
         mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgePanels");
         mapSettings.put("notification", Settings.ACTION_SETTINGS);
+        mapSettings.put("apk install", "apk");
 
         listView = (ListView) findViewById(R.id.listView);
         list = new ArrayList<String>(mapSettings.keySet());
@@ -73,16 +76,35 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         String key = list.get(position);
         String value = mapSettings.get(key);
 
+        if ("apk".equals(value)) {
+
+            File apkFile = new File(Environment.getExternalStorageDirectory().toString() + "/" + Environment.DIRECTORY_DOWNLOADS+"/"+"test.apk");
+            Uri apkUri = Uri.fromFile(apkFile);
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(apkUri,"application/vnd.android.package-archive");
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
         if (value.contains("/")) {
             ComponentName cn = new ComponentName(value.split("/")[0], value.split("/")[1]);
             Intent intent = new Intent();
             intent.setComponent(cn);
-            startActivity(intent);
+            startIntent(intent);
             return;
         }
 
         Intent intent = new Intent(value);
+        startIntent(intent);
+    }
+
+    private void startIntent(Intent intent) {
         startActivity(intent);
+        finish();
     }
 
 
