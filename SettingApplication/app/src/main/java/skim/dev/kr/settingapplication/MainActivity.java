@@ -2,11 +2,15 @@ package skim.dev.kr.settingapplication;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Environment;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +49,38 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
+        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String imei = telephonyManager.getDeviceId();
+        Log.d(tagName, "imei="+imei);
+
+        String model = Build.MODEL;
+        Log.d(tagName, "model="+model);
+
+        String version = Build.VERSION.RELEASE+"";
+        Log.d(tagName, "version="+version);
+
+
+        // Change Screen Timeout
+        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 10 * 60 * 1000);
+
+        mapSettings = new HashMap<>();
+        mapSettings.put("sound", Settings.ACTION_SOUND_SETTINGS);
+        mapSettings.put("AUTO TIME OFF", Settings.ACTION_DATE_SETTINGS);
+        mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
+        mapSettings.put("언어 설정", Settings.ACTION_LOCALE_SETTINGS);
+        mapSettings.put("화면 해상도", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("Swife 해제", "android.app.action.SET_NEW_PASSWORD");
+        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgePanels");
+        mapSettings.put("notification", Settings.ACTION_SETTINGS);
+        mapSettings.put("apk install", "apk");
+
+        listView = (ListView) findViewById(R.id.listView);
+        list = new ArrayList<String>(mapSettings.keySet());
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+
 
         // Change Screen Timeout
         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 10 * 60 * 1000);
