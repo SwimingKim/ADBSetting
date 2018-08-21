@@ -23,7 +23,7 @@ public class DetailActivity extends Activity {
         modelText.setText("model = "+Build.MODEL);
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         imeiText.setText("imei = "+tm.getDeviceId());
-        snText.setText("sn = "+tm.getSimSerialNumber());
+        snText.setText("sn = "+tm.getSubscriberId());
         versionText.setText("version = "+Build.VERSION.RELEASE);
 
     }

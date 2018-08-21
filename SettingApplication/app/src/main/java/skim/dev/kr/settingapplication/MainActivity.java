@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
@@ -50,6 +51,16 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         // Change Screen Timeout
 //        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 10 * 60 * 1000);
 
+//        try {
+//            String deviceId = Settings.System.getString(getContentResolver(),
+//                    Settings.System.ANDROID_ID);
+//            String idBySerialNumber = (String) Build.class.getField("SERIAL").get(null);
+//            Toast.makeText(getApplicationContext(), Build.SERIAL+"", Toast.LENGTH_LONG).show();
+//        } catch (Exception e) {
+//            e.printStackTrace();;
+//        }
+
+
         mapSettings = new LinkedHashMap<>();
         mapSettings.put("lang", Settings.ACTION_LOCALE_SETTINGS);
         mapSettings.put("display", Settings.ACTION_DISPLAY_SETTINGS);
@@ -71,7 +82,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
         mapSettings.put("apk install", "apk");
-        mapSettings.put("info", "");
+        mapSettings.put("info", Settings.ACTION_DEVICE_INFO_SETTINGS);
 
         listView = (ListView) findViewById(R.id.listView);
         list = new ArrayList<String>(mapSettings.keySet());
@@ -89,11 +100,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         String key = list.get(position);
         String value = mapSettings.get(key);
 
-        if ("info".equals(key)) {
-            Intent intent= new Intent(getApplicationContext(), DetailActivity.class);
-            startIntent(intent);
-            return;
-        }
+//        if ("info".equals(key)) {
+//            Intent intent= new Intent(getApplicationContext(), DetailActivity.class);
+//            startIntent(intent);
+//            return;
+//        }
 
         if ("apk".equals(value)) {
 
