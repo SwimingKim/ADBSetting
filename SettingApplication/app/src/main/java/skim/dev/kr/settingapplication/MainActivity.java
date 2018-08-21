@@ -2,15 +2,11 @@ package skim.dev.kr.settingapplication;
 
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Environment;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -50,50 +47,28 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //            e.printStackTrace();
 //        }
 
-        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = telephonyManager.getDeviceId();
-        Log.d(tagName, "imei="+imei);
-
-        String model = Build.MODEL;
-        Log.d(tagName, "model="+model);
-
-        String version = Build.VERSION.RELEASE+"";
-        Log.d(tagName, "version="+version);
-
-
         // Change Screen Timeout
         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 10 * 60 * 1000);
 
-        mapSettings = new HashMap<>();
+        mapSettings = new LinkedHashMap<>();
+        mapSettings.put("wifi", Settings.ACTION_WIFI_SETTINGS);
+        mapSettings.put("bluetooth", "com.android.settings/com.android.settings.bluetooth.BluetoothSettings");
+        mapSettings.put("nfc", Settings.ACTION_NFC_SETTINGS);
+        mapSettings.put("loaction", Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        mapSettings.put("scanning ", Settings.ACTION_SETTINGS);
         mapSettings.put("sound", Settings.ACTION_SOUND_SETTINGS);
-        mapSettings.put("AUTO TIME OFF", Settings.ACTION_DATE_SETTINGS);
-        mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
-        mapSettings.put("언어 설정", Settings.ACTION_LOCALE_SETTINGS);
-        mapSettings.put("화면 해상도", Settings.ACTION_DISPLAY_SETTINGS);
-        mapSettings.put("Swife 해제", "android.app.action.SET_NEW_PASSWORD");
-        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgePanels");
         mapSettings.put("notification", Settings.ACTION_SETTINGS);
-        mapSettings.put("apk install", "apk");
+        mapSettings.put("display", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgeScreenSettingsMain");
+        mapSettings.put("google", Settings.ACTION_VOICE_INPUT_SETTINGS);
+        mapSettings.put("swipe", "android.app.action.SET_NEW_PASSWORD");
+        mapSettings.put("update", "android.settings.ACTION_SETTINGS");
+//        mapSettings.put("update", "android.settings.SYSTEM_UPDATE_SETTINGS");
+        mapSettings.put("auto time", Settings.ACTION_DATE_SETTINGS);
 
-        listView = (ListView) findViewById(R.id.listView);
-        list = new ArrayList<String>(mapSettings.keySet());
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
 
-
-        // Change Screen Timeout
-        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 10 * 60 * 1000);
-
-        mapSettings = new HashMap<>();
-        mapSettings.put("sound", Settings.ACTION_SOUND_SETTINGS);
-        mapSettings.put("AUTO TIME OFF", Settings.ACTION_DATE_SETTINGS);
         mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
-        mapSettings.put("언어 설정", Settings.ACTION_LOCALE_SETTINGS);
-        mapSettings.put("화면 해상도", Settings.ACTION_DISPLAY_SETTINGS);
-        mapSettings.put("Swife 해제", "android.app.action.SET_NEW_PASSWORD");
-        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgePanels");
-        mapSettings.put("notification", Settings.ACTION_SETTINGS);
+        mapSettings.put("lang", Settings.ACTION_LOCALE_SETTINGS);
         mapSettings.put("apk install", "apk");
 
         listView = (ListView) findViewById(R.id.listView);
@@ -111,6 +86,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         String key = list.get(position);
         String value = mapSettings.get(key);
+
+        if ("update".equals(key)) {
+            Intent intent = new Intent(value);
+            startActivityForResult(intent, 0);
+//            startIntent(intent);
+//            startactivityforresult(New Intent("android.settings.SYSTEM_UPDATE_SETTINGS"),0)
+        }
 
         if ("apk".equals(value)) {
 
