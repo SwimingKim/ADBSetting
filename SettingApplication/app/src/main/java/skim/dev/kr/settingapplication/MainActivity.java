@@ -2,16 +2,12 @@ package skim.dev.kr.settingapplication;
 
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener{
 
     private String tagName = "skim";
     private ListView listView;
@@ -55,25 +51,25 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 10 * 60 * 1000);
 
         mapSettings = new LinkedHashMap<>();
-//        mapSettings.put("update", "android.settings.ACTION_SETTINGS");
-        mapSettings.put("update", Settings.ACTION_SETTINGS);
-        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgePanels");
-
-        mapSettings.put("notification", Settings.ACTION_SETTINGS);
-        mapSettings.put("connection", Settings.ACTION_SETTINGS);
+        mapSettings.put("wifi", Settings.ACTION_WIFI_SETTINGS);
+        mapSettings.put("bluetooth", "com.android.settings/com.android.settings.bluetooth.BluetoothSettings");
+        mapSettings.put("nfc", Settings.ACTION_NFC_SETTINGS);
         mapSettings.put("loaction", Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         mapSettings.put("scanning ", Settings.ACTION_SETTINGS);
         mapSettings.put("sound", Settings.ACTION_SOUND_SETTINGS);
+        mapSettings.put("notification", Settings.ACTION_SETTINGS);
         mapSettings.put("display", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgeScreenSettingsMain");
         mapSettings.put("google", Settings.ACTION_VOICE_INPUT_SETTINGS);
         mapSettings.put("swipe", "android.app.action.SET_NEW_PASSWORD");
+        mapSettings.put("update", "android.settings.ACTION_SETTINGS");
 //        mapSettings.put("update", "android.settings.SYSTEM_UPDATE_SETTINGS");
         mapSettings.put("auto time", Settings.ACTION_DATE_SETTINGS);
 
-        mapSettings.put("info", "");
+
+        mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
         mapSettings.put("lang", Settings.ACTION_LOCALE_SETTINGS);
         mapSettings.put("apk install", "apk");
-        mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
 
         listView = (ListView) findViewById(R.id.listView);
         list = new ArrayList<String>(mapSettings.keySet());
@@ -91,24 +87,21 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         String key = list.get(position);
         String value = mapSettings.get(key);
 
-        if ("".equals(value)) {
-            String model = Build.MODEL;
-            String version = Build.VERSION.RELEASE;
-            TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-            String imei = tm.getDeviceId();
-            String sn = tm.getSimSerialNumber();
-            Toast.makeText(getApplicationContext(), model+"/"+imei+"/"+sn+"/"+version, Toast.LENGTH_LONG).show();
-            return;
+        if ("update".equals(key)) {
+            Intent intent = new Intent(value);
+            startActivityForResult(intent, 0);
+//            startIntent(intent);
+//            startactivityforresult(New Intent("android.settings.SYSTEM_UPDATE_SETTINGS"),0)
         }
 
         if ("apk".equals(value)) {
 
-            File apkFile = new File(Environment.getExternalStorageDirectory().toString() + "/" + Environment.DIRECTORY_DOWNLOADS + "/" + "test.apk");
+            File apkFile = new File(Environment.getExternalStorageDirectory().toString() + "/" + Environment.DIRECTORY_DOWNLOADS+"/"+"test.apk");
             Uri apkUri = Uri.fromFile(apkFile);
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-                startIntent(intent);
+                intent.setDataAndType(apkUri,"application/vnd.android.package-archive");
+                startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -116,14 +109,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         }
 
         if (value.contains("/")) {
-//            ComponentName cn = new ComponentName(value.split("/")[0], value.split("/")[1]);
-//            Intent intent = new Intent();
-//            intent.setComponent(cn);
-//            startIntent(intent);
-
-            Intent intent = getPackageManager().getLaunchIntentForPackage(value.split("/")[0]);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            ComponentName cn = new ComponentName(value.split("/")[0], value.split("/")[1]);
+            Intent intent = new Intent();
+            intent.setComponent(cn);
+            startIntent(intent);
             return;
         }
 
@@ -133,16 +122,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     private void startIntent(Intent intent) {
         startActivity(intent);
-//        finish();
+        finish();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Toast.makeText(getApplicationContext(), keyCode + "", Toast.LENGTH_LONG).show();
-        return super.onKeyDown(keyCode, event);
-    }
 
-    //
+//
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
