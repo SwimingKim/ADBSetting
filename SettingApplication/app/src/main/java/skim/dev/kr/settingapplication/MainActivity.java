@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener{
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private String tagName = "skim";
     private ListView listView;
@@ -108,11 +108,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         if ("apk".equals(value)) {
 
-            File apkFile = new File(Environment.getExternalStorageDirectory().toString() + "/" + Environment.DIRECTORY_DOWNLOADS+"/"+"test.apk");
+            File apkFile = new File(Environment.getExternalStorageDirectory().toString() + "/imfine/galaxy.apk");
             Uri apkUri = Uri.fromFile(apkFile);
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(apkUri,"application/vnd.android.package-archive");
+                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
