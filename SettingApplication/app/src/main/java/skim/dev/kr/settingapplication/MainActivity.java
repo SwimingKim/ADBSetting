@@ -75,10 +75,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mapSettings.put("location", Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         mapSettings.put("scanning ", Settings.ACTION_SETTINGS);
         mapSettings.put("sound", Settings.ACTION_SOUND_SETTINGS);
+        mapSettings.put("auto time", Settings.ACTION_DATE_SETTINGS);
         mapSettings.put("google", Settings.ACTION_VOICE_INPUT_SETTINGS);
         mapSettings.put("swipe", "android.app.action.SET_NEW_PASSWORD");
-        mapSettings.put("auto time", Settings.ACTION_DATE_SETTINGS);
-
 
         mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
         mapSettings.put("apk install", "apk");
