@@ -31,7 +31,10 @@ adb shell input tap POS_X POS_Y
 adb shell input keyevent KEY_CODE
 ```
 
-
+7. 스크롤 이벤트
+```
+adb shell input touchscreen swipe 300 800 500 400 100
+```
 
 
 999. 기타
