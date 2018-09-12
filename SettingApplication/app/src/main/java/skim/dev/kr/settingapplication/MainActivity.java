@@ -32,8 +32,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private List<String> list;
     private HashMap<String, String> mapSettings;
 
-    // 언어설정, 화면해상도변경, swift 해제, 와이파이 설정
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,27 +134,5 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        finish();
     }
-
-
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        Button btn = (Button) findViewById(R.id.btn);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                changeLanguage();
-//
-//                Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-//                intent = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
-//                startActivity(intent);
-//
-//            }
-//        });
-//    }
-
 
 }
