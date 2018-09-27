@@ -61,24 +61,25 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         mapSettings = new LinkedHashMap<>();
         mapSettings.put("lang", Settings.ACTION_LOCALE_SETTINGS);
-        mapSettings.put("display", Settings.ACTION_DISPLAY_SETTINGS);
-        mapSettings.put("update", Settings.ACTION_SETTINGS);
-        mapSettings.put("notification", Settings.ACTION_SETTINGS);
+        mapSettings.put("[1] display", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("[2] update", Settings.ACTION_SETTINGS);
+        mapSettings.put("[3] notification", Settings.ACTION_SETTINGS);
 //        mapSettings.put("update", "android.settings.ACTION_SETTINGS");
-        mapSettings.put("time & edge", Settings.ACTION_DISPLAY_SETTINGS);
-        mapSettings.put("navi", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("[4] time & edge", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("[5] navi", Settings.ACTION_DISPLAY_SETTINGS);
 //        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgeScreenSettingsMain");
 
-        mapSettings.put("connection", Settings.ACTION_SETTINGS);
-        mapSettings.put("location", Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        mapSettings.put("scanning ", Settings.ACTION_SETTINGS);
-        mapSettings.put("sound", Settings.ACTION_SOUND_SETTINGS);
-        mapSettings.put("auto time", Settings.ACTION_DATE_SETTINGS);
-        mapSettings.put("google", Settings.ACTION_VOICE_INPUT_SETTINGS);
-        mapSettings.put("swipe", "android.app.action.SET_NEW_PASSWORD");
+        mapSettings.put("[6] connection", Settings.ACTION_SETTINGS);
+        mapSettings.put("[7] location", Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        mapSettings.put("[8] scanning ", Settings.ACTION_SETTINGS);
+        mapSettings.put("[9] sound", Settings.ACTION_SOUND_SETTINGS);
+        mapSettings.put("[10] auto time", Settings.ACTION_DATE_SETTINGS);
+
+        mapSettings.put("[11] ok google", Settings.ACTION_VOICE_INPUT_SETTINGS);
+        mapSettings.put("[12] swipe", "android.app.action.SET_NEW_PASSWORD");
 
         mapSettings.put("개발자 설정", Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
-        mapSettings.put("apk install", "apk");
+//        mapSettings.put("apk install", "apk");
         mapSettings.put("info", Settings.ACTION_DEVICE_INFO_SETTINGS);
 
         listView = (ListView) findViewById(R.id.listView);
@@ -96,12 +97,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         String key = list.get(position);
         String value = mapSettings.get(key);
-
-//        if ("info".equals(key)) {
-//            Intent intent= new Intent(getApplicationContext(), DetailActivity.class);
-//            startIntent(intent);
-//            return;
-//        }
 
         if ("apk".equals(value)) {
 
