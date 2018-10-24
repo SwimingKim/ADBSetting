@@ -65,12 +65,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mapSettings.put("[2] update", Settings.ACTION_SETTINGS);
         mapSettings.put("[3] notification", Settings.ACTION_SETTINGS);
 //        mapSettings.put("update", "android.settings.ACTION_SETTINGS");
-        mapSettings.put("[4] time & edge", Settings.ACTION_DISPLAY_SETTINGS);
-        mapSettings.put("[5] navi", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("[4] time", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("[5] edge", Settings.ACTION_DISPLAY_SETTINGS);
+        mapSettings.put("[6] navi", Settings.ACTION_DISPLAY_SETTINGS);
 //        mapSettings.put("edge", "com.samsung.android.app.cocktailbarservice/com.samsung.android.app.cocktailbarservice.settings.EdgeScreenSettingsMain");
 
-        mapSettings.put("[6] connection", Settings.ACTION_SETTINGS);
-        mapSettings.put("[7] location", Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        mapSettings.put("[7] connection", Settings.ACTION_SETTINGS);
         mapSettings.put("[8] scanning ", Settings.ACTION_SETTINGS);
         mapSettings.put("[9] sound", Settings.ACTION_SOUND_SETTINGS);
         mapSettings.put("[10] auto time", Settings.ACTION_DATE_SETTINGS);
